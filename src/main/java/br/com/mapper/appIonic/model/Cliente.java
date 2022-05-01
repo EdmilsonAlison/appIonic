@@ -17,13 +17,13 @@ import javax.persistence.OneToMany;
 
 import br.com.mapper.appIonic.model.enums.TipoCliente;
 
-
 @Entity
 public class Cliente implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String email;
@@ -36,6 +36,9 @@ public class Cliente implements Serializable {
 	@ElementCollection
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>();
+
+	@OneToMany(mappedBy = "cliente")
+	private List<Pedido> pedidos = new ArrayList<>();
 
 	public Cliente() {
 
@@ -54,6 +57,18 @@ public class Cliente implements Serializable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public void setTipoCliente(Integer tipoCliente) {
+		this.tipoCliente = tipoCliente;
 	}
 
 	public String getNome() {
